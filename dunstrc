@@ -1,8 +1,8 @@
 # See dunst(5) for all configuration options
 
 [global]
-    monitor = 0
-    #follow = keyboard
+    #monitor = 0
+    follow = keyboard
     width = 300
     height = 300
     origin = top-center
@@ -85,6 +85,18 @@
     new_icon = "~/Pictures/dpWarn3.jpg"
 
 ###-----CAPACITY TRIGGER WARNINGS-----#
+[e2eVerficiation]
+    appname = Slack
+    body = "Datadog: Triggered:.* E2E Verification*"
+    new_icon = "~/Pictures/healthCheck.jpg"
+    timeout = 1
+    script = "~/scripts/dunstMagic/E2E_Verification"
+    urgency = critical
+     background = "#900000"
+    foreground = "#ffffff"
+    frame_color = "#ff0000"
+    timeout = 0
+
 #[InterfaceGatewayisSlow]
 #    appname = Slack
 #    body = "Datadog: Triggered:.* Interface Gateway*"
