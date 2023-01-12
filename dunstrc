@@ -73,8 +73,9 @@
     foreground = "#ffffff"
     timeout = 3
     # new_icon for notifications with normal urgency, uncomment to enable
-    new_icon = "~/Pictures/artemis.png"
-    #new_icon = "~/Pictures/spiderverse.jpeg"
+    #new_icon = "~/Pictures/artemis.png"
+    #new_icon = "~/Pictures/spideyIcon2.png"
+    new_icon = "~/Pictures/neonIcons/acrobat-min.PNG"
 
 [urgency_critical]
     background = "#900000"
@@ -84,22 +85,22 @@
     # new_icon for notifications with critical urgency, uncomment to enable
     new_icon = "~/Pictures/dpWarn3.jpg"
 
+
 ###-----CAPACITY TRIGGER WARNINGS-----#
-[e2eVerficiation]
-    appname = Slack
-    body = "Datadog: Triggered:.* E2E Verification*"
-    new_icon = "~/Pictures/healthCheck.jpg"
-    timeout = 1
-    script = "~/scripts/dunstMagic/E2E_Verification"
-    urgency = critical
-     background = "#900000"
-    foreground = "#ffffff"
-    frame_color = "#ff0000"
-    timeout = 0
+#[e2eVerficiation]
+#    #    body = "Datadog: Triggered:.* E2E Verification*"
+#    new_icon = "~/Pictures/healthCheck.jpg"
+#    timeout = 1
+#    script = "~/scripts/dunstMagic/E2E_Verification"
+#    urgency = critical
+#     background = "#900000"
+#    foreground = "#ffffff"
+#    frame_color = "#ff0000"
+#    timeout = 0
+
 
 #[InterfaceGatewayisSlow]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Interface Gateway*"
+#    #    body = "Datadog: Triggered:.* Interface Gateway*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/InterfaceGatewayisSlow"
@@ -110,8 +111,7 @@
 #    timeout = 0
 #
 #[NoAuditLogs]
-#    appname = Slack
-#    body = "Datadog: Triggered:.*No Recent Audit Logs"
+#    #    body = "Datadog: Triggered:.*No Recent Audit Logs"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/NoAuditLogs"
@@ -125,24 +125,21 @@
 #    urgency = critical
 #
 #[KubeCronJobFailed]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Kube Cron Job Failed*"
+#    #    body = "Datadog: Triggered:.* Kube Cron Job Failed*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/KubeJobFailed"
 #    urgency = critical
 #
 #[CapacityisSlow]
-#    appname = Slack
-#    body = "Datadog: Triggered:.*Capacity Slow*"
+#    #    body = "Datadog: Triggered:.*Capacity Slow*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "/home/n0ko/scripts/dunstMagic/CapacityisSlow"
 #    urgency = critical
 #
 #[ServiceTicketing]
-#    appname = Slack
-#    body = "Datadog: Triggered:.*Service*"
+#    #    body = "Datadog: Triggered:.*Service*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "/home/n0ko/scripts/dunstMagic/ServiceTicketing"
@@ -150,192 +147,167 @@
 #
 #
 #[DiskFreeisLow]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Disk Free is Low*"
+#    #    body = "Datadog: Triggered:.* Disk Free is Low*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
-#    script = "~/scripts/dunstMagic/DiskFreeislow"
 #    urgency = critical
 #
 #[E2ESLADataMissing]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* SLA Data Missing*"
+#    #    body = "Datadog: Triggered:.* SLA Data Missing*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/E2ESLADataMissing"
 #    urgency = critical
 #
 #[HTTP4XXResponsecode]
-#    appname = Slack
-#    body =  "Datadog: Triggered:.*HTTP 4XX.*"
+#    #    body =  "Datadog: Triggered:.*HTTP 4XX.*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/HTTP4XXResponsecode"
 #    urgency = critical
 #
 #[HTTP5XXResponsecode]
-#    appname = Slack
-#    body = "Datadog: Triggered:.*HTTP 5.*"
+#    #    body = "Datadog: Triggered:.*HTTP 5.*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/http5xxishigh"
 #    urgency = critical
 #
 #[KubeJobFailed]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Job Failed*"
+#    #    body = "Datadog: Triggered:.* Job Failed*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/KubeJobFailed"
 #    urgency = critical
 #
 #[KubeHpaScaling]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Hpa Scaling*"
+#    #    body = "Datadog: Triggered:.* Hpa Scaling*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/KubeHpaScaling"
 #    urgency = critical
 #
 ##[PVCLowSpaceWarning]
-##    appname = Slack
-##    body = ".*warn*."
+##    ##    body = ".*warn*."
 ##    new_icon = "~/Pictures/vector/checkEngine.jpg"
 ##    timeout = 1
 ##    script = "~/scripts/dunstMagic/PVCLowSpaceWarning"
 ##    urgency = critical
 #
 #[InterfaceGatewayisSlow]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Gateway is Slow*"
+#    #    body = "Datadog: Triggered:.* Gateway is Slow*"
 #    new_icon = "~/Pictures/vector/checkEngine.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/InterfaceGatewayisSlow"
 #    urgency = critical
 #
 #[PodNotStarting]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Not Starting*"
+#    #    body = "Datadog: Triggered:.* Not Starting*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/PodNotStarting"
 #    urgency = critical
 #
 #[PodsNotReady]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Not Ready*"
+#    #    body = "Datadog: Triggered:.* Not Ready*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/PodsNotReady"
 #    urgency = critical
 #
 #[RDSDiskFreeWarning]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Disk Free Warning*"
+#    #    body = "Datadog: Triggered:.* Disk Free Warning*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/RDSDiskFreeWarning"
 #    urgency = critical
 #
 #[RDSHighCPUWarning]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* High CPU Warning*"
+#    #    body = "Datadog: Triggered:.* High CPU Warning*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/RDSHighCPUWarning"
 #    urgency = critical
 #
 #[RDSMemFree]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Mem Free*"
+#    #    body = "Datadog: Triggered:.* Mem Free*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/RDSMemFree"
 #    urgency = critical
 #
 #[RDSReplicaLag]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Replica Lag*"
+#    #    body = "Datadog: Triggered:.* Replica Lag*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/RDSReplicaLag"
 #    urgency = critical
 #
 #[RabbitMQHighQueueCount]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* High Queue Count*"
+#    #    body = "Datadog: Triggered:.* High Queue Count*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/RabbitMQHighQueueCount"
 #    urgency = critical
 #
 #[RabbitMQMemoryisCriticallyHigh] //rabbitmq abnormal memory usage
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Abnormal Memory Usage*"
+#    #    body = "Datadog: Triggered:.* Abnormal Memory Usage*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/RabbitMQMemoryisCriticallyHigh"
 #    urgency = critical
 #
 #[RabbitMQNLPEngineQueueCount]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* NLP Engine Queue Count*"
+#    #    body = "Datadog: Triggered:.* NLP Engine Queue Count*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/RabbitMQNLPEngineQueueCount"
 #    urgency = critical
 #
 #[RabbitMQ-File_update_queue]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* RabbitMQ-File_update_queue*"
+#    #    body = "Datadog: Triggered:.* RabbitMQ-File_update_queue*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/RabbitMQ-File_update_queue"
 #    urgency = critical
 #
 #[SSLCertificateExpiring]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* SSL*"
+#    #    body = "Datadog: Triggered:.* SSL*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/SSLCertificateExpiring"
 #    urgency = critical
 #
 #[VPNSitetoSiteDown]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* VPN*"
+#    #    body = "Datadog: Triggered:.* VPN*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/VPNSitetoSiteDown"
 #    urgency = critical
 #
 #[VeleroBackupFailures]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Velero*"
+#    #    body = "Datadog: Triggered:.* Velero*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/VeleroBackupFailures"
 #    urgency = critical
 #
 #[AutoClockinsyncwithNTP]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Auto Clock*"
+#    #    body = "Datadog: Triggered:.* Auto Clock*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/AutoClockinsyncwithNTP"
 #    urgency = critical
 #
 #[MultipleRestarts]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* Multiple Restarts*"
+#    #    body = "Datadog: Triggered:.* Multiple Restarts*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/MultipleRestarts"
 #    urgency = critical
 #
 #[highaveragelatency]
-#    appname = Slack
-#    body = "Datadog: Triggered:.* high average latency*"
+#    #    body = "Datadog: Triggered:.* high average latency*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    script = "~/scripts/dunstMagic/highaveragelatency"
@@ -343,197 +315,169 @@
 
 ##-----Capacity warnings-----#
 #[InterfaceGatewayisSlow]
-#    appname = Slack
-#    body = *Warn:* *Interface Gateway is Slow*
+#    #    body = *Warn:* *Interface Gateway is Slow*
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[NoAuditLogs]
-#    appname = Slack
-#    body = Datadog Warn:*Audit Logs*
+#    #    body = Datadog Warn:*Audit Logs*
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RDSReplicaLag]
-#    appname = Slack
-#    body = Datadog Warn:*Replica Lag*
+#    #    body = Datadog Warn:*Replica Lag*
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[KubeCronJobFailed]
-#    appname = Slack
-#    body = Datadog Warn:*Cron Job Failed*
+#    #    body = Datadog Warn:*Cron Job Failed*
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[DiskFreeisLow]
-#    appname = Slack
-#    body = Datadog Warn:*Disk Free is Low*
+#    #    body = Datadog Warn:*Disk Free is Low*
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[E2ESLADataMissing]
-#    appname = Slack
-#    body = Datadog Warn:*SLA Data Missing*
+#    #    body = Datadog Warn:*SLA Data Missing*
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 [HTTP4XXResponsecode]
-    appname = Slack
-    body = "Datadog Warn:*HTTP 4XX*"
+        body = "Datadog Warn:*HTTP 4XX*"
     new_icon = "~/Pictures/vector/checkEngine.jpg"
     timeout = 1
     urgency = low
 
 #[HTTP5XXResponsecode]
-#    appname = Slack
-#    body = "Datadog: Warn:*HTTP 5XX*"
+#    #    body = "Datadog: Warn:*HTTP 5XX*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[KubeJobFailed]
-#    appname = Slack
-#    body = "Datadog: Warn:*Job Failed*
+#    #    body = "Datadog: Warn:*Job Failed*
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 [KubeHpaScaling]
-    appname = Slack
-    body = "Datadog: Warn:.*HPA Scaling.*"
+        body = "Datadog: Warn:.*HPA Scaling.*"
     new_icon = "~/Pictures/vector/checkEngine.jpg"
     timeout = 1
     urgency = low
 #
 #[PVCLowSpaceWarning]
-#    appname = Slack
-#    body = "Datadog: Warn:*Low Space Warning*"
+#    #    body = "Datadog: Warn:*Low Space Warning*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[InterfaceGatewayisSlow]
-#    appname = Slack
-#    body = "Datadog: Warn:*Gateway is Slow*"
+#    #    body = "Datadog: Warn:*Gateway is Slow*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[PodNotStarting]
-#    appname = Slack
-#    body = "Datadog: Warn:*Not Starting*"
+#    #    body = "Datadog: Warn:*Not Starting*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[PodsNotReady]
-#    appname = Slack
-#    body = "Datadog: Warn:*Not Ready*"
+#    #    body = "Datadog: Warn:*Not Ready*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RDSDiskFreeWarning]
-#    appname = Slack
-#    body = "Datadog: Warn:*Disk Free Warning*"
+#    #    body = "Datadog: Warn:*Disk Free Warning*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RDSHighCPUWarning]
-#    appname = Slack
-#    body = "Datadog: Warn:*High CPU Warning*"
+#    #    body = "Datadog: Warn:*High CPU Warning*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RDSMemFree]
-#    appname = Slack
-#    body = "Datadog: Warn:*Mem Free*"
+#    #    body = "Datadog: Warn:*Mem Free*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RDSReplicaLag]
-#    appname = Slack
-#    body = "Datadog: Warn:*Replica Lag*"
+#    #    body = "Datadog: Warn:*Replica Lag*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RabbitMQHighQueueCount]
-#    appname = Slack
-#    body = "Datadog: Warn:*High Queue Count*"
+#    #    body = "Datadog: Warn:*High Queue Count*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RabbitMQMemoryislowlyHigh]
-#    appname = Slack
-#    body = "Datadog: Warn:*Memory is lowly High*"
+#    #    body = "Datadog: Warn:*Memory is lowly High*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RabbitMQNLPEngineQueueCount]
-#    appname = Slack
-#    body = "Datadog: Warn:*NLP Engine Queue Count*"
+#    #    body = "Datadog: Warn:*NLP Engine Queue Count*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[RabbitMQ-File_update_queue]
-#    appname = Slack
-#    body = "Datadog: Warn:*RabbitMQ-File_update_queue*"
+#    #    body = "Datadog: Warn:*RabbitMQ-File_update_queue*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[SSLCertificateExpiring]
-#    appname = Slack
-#    body = "Datadog: Warn:*SSL*"
+#    #    body = "Datadog: Warn:*SSL*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[VPNSitetoSiteDown]
-#    appname = Slack
-#    body = "Datadog: Warn:*VPN*"
+#    #    body = "Datadog: Warn:*VPN*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[VeleroBackupFailures]
-#    appname = Slack
-#    body = "Datadog: Warn:*Velero*"
+#    #    body = "Datadog: Warn:*Velero*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[AutoClockinsyncwithNTP]
-#    appname = Slack
-#    body = "Datadog: Warn:*sync with NTP*"
+#    #    body = "Datadog: Warn:*sync with NTP*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[MultipleRestarts]
-#    appname = Slack
-#    body = "Datadog: Warn: Multiple Restarts*"
+#    #    body = "Datadog: Warn: Multiple Restarts*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
 #
 #[highaveragelatency]
-#    appname = Slack
-#    body = "Datadog: Warn:*high average latency*"
+#    #    body = "Datadog: Warn:*high average latency*"
 #    new_icon = "~/Pictures/healthCheck.jpg"
 #    timeout = 1
 #    urgency = low
@@ -616,35 +560,30 @@
 ##    script = dunst_test.sh
 #
 ##[capacity]
-##    appname = Slack
-##    summary = *equityim*
+##    ##    summary = *equityim*
 ##    new_icon = "~/Pictures/capacity.png"
 #
 ##-----CAPACITY RULES--------#
 [capDatadogRecovery]
-    appname = Slack
-    body = .*Recovered.*
+        body = .*Recovered.*
     new_icon = "~/Pictures/greenHealth.jpeg"
     timeout = 1
     #script = <fileName>
 
 #[capPrometheusFiring]
-#    appname = Slack
-#    body = \[FIRING:1\]*
+#    #    body = \[FIRING:1\]*
 #    new_icon = "~/Pictures/vector/covid19.jpg"
 #    timeout = 1
 #    #script = "~/scripts/dunstMagic/triggered.sh"
 #
 #[capPrometheusRecovered]
-#    appname = Slack
-#    body = [RESOLVED]*
+#    #    body = [RESOLVED]*
 #    new_icon = "~/Pictures/greenHealth.jpeg"
 #    timeout = 1
 #    #script = <fileName>
 #
 #
 [gopherNuggets]
-    appname = Slack
     summary = .*gopher.*
     new_icon = "~/Pictures/gopherIcon.png"
     timeout = 1
@@ -666,6 +605,14 @@
     #background
     #foreground
 
+[discord]
+    body = .*discord.*
+    new_icon = "~/Pictures/neonIcons/discord.PNG"
+    timeout = 1
+    #script = follow waning link in browser -> browser open log pointing to stack trace
+    #background
+    #foreground
+
 [youTube]
     body = .*youtube.*
     new_icon = "~/Pictures/neonIcons/youtube.PNG"
@@ -674,7 +621,7 @@
     #background
     #foreground
 
-[youTube]
+[emails]
     body = .*new emails.*
     new_icon = "~/Pictures/neonIcons/google.PNG"
     timeout = 1
@@ -690,7 +637,22 @@
     #background
     #foreground
 
-[systemCommands]
+[Messages]
+    appname = Electron
+    new_icon = "~/Pictures/neonIcons/messenger.PNG"
+    timeout = 1
+    urgency = normal
+    background = "#000000"
+    foreground = "#ffffff"
+
+[Capacity]
+    summary = .*equityim.*
+    new_icon = "~/Pictures/neonIcons/Clever-min.PNG"
+    timeout = 1
+    urgency = normal
+    background = "#000000"
+    foreground = "#ffffff"
+#[systemCommands]
 
 #[ignore]
 #    # This notification will not be displayed
@@ -707,25 +669,10 @@
 #    summary = "foobar"
 #    skip_display = yes
 
-[signed_on]
-    appname = Slack
-    summary = ".*signed on.*"
-    urgency = low
-
-[signed_off]
-    appname = Slack
-    summary = .*signed off.*
-    urgency = low
-#
 [scrot]
     appname = scrot
     summary = .*says.*
     urgency = normal
-
-[slack]
-    appname = slack
-    summary = .*slack.com.*
-    urgency = low
 
 #[twitter]
 #    appname = Pidgin
