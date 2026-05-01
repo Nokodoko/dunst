@@ -16,7 +16,8 @@
     progress_bar_max_width = 300
     indicate_hidden = yes
     transparency = 30
-    separator_height = 2
+    separator_height = 0
+    gap_size = -8
     padding = 2
     horizontal_padding = 2
     text_icon_padding = 0
