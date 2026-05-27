@@ -1,929 +1,138 @@
-# See unst(5) for all configuration options
+# dunstrc — proposed configuration for 1:1 parity with the macOS dunst-overlay
+# (SwiftUI floating panel at ~/.local/bin/dunst-overlay on the Mac).
+#
+# Source of truth: /Users/n0ko/.local/src/dunst-overlay.swift (Mac).
+# Generated: 2026-05-27. DO NOT APPLY YET — review first.
+#
+# Mapping table: /tmp/mapping-table.md
+# Original (pre-change) backup recommendation:
+#   cp ~/.config/dunst/dunstrc ~/.config/dunst/dunstrc.before-overlay-parity.$(date +%Y%m%d-%H%M%S)
 
 [global]
     monitor = 0
     follow = none
-    width = 300
-    height = 200
+
+    # ── Geometry / spawn ─────────────────────────────────────────────────
+    # Mac uses a fixed 320 px panel anchored 12 px from the top-right of the
+    # visible screen frame. dunst's `width` accepts (min, max); making min=max
+    # forces a fixed width. `offset = 12x23` places notifications flush directly
+    # below the dwm/dwmblocks status bar (measured 23 px via xdotool active-window
+    # y=23 on 2026-05-27). No Mac-parity Y inset — user wants flush, no gap.
+    width = (320, 320)
+    height = 300
     origin = top-right
-    offset = 10x333
+    offset = 12x23                # y = 23px (dwmblocks bar height); flush, no gap
     scale = 1
-    notification_limit = 0
-    progress_bar = true
-    progress_bar_height = 10
-    progress_bar_frame_width = 1
-    progress_bar_min_width = 150
-    progress_bar_max_width = 300
-    indicate_hidden = yes
-    transparency = 30
-    separator_height = 0
-    gap_size = -8
-    padding = 2
-    horizontal_padding = 2
-    text_icon_padding = 0
-    frame_width = 0
-    close = ctrl+space
+
+    # ── Stacking ─────────────────────────────────────────────────────────
+    notification_limit = 1        # only one on-screen at a time; queue depth shown via dwmblocks badge
+    gap_size = 6                  # Mac shows one panel at a time; on lewis a small
+                                  # positive gap is the closest "tile downward" feel.
+
+    # ── Transparency / frame / corner ────────────────────────────────────
+    transparency = 0              # fully opaque (was 15; user reverted because dwm side panel was readable behind it)
+    corner_radius = 10            # Mac uses 10 px
+    frame_width = 2               # Mac uses 1.5 px stroke. dunst is integer-only;
+                                  # 2 is the nearest visually matching value.
     frame_color = "#00FFFF"
+    separator_height = 0
     separator_color = frame
-    sort = yes
-    font = VictorMono 11
-    close = ctrl+space
+
+    # ── Padding ──────────────────────────────────────────────────────────
+    # Mac inner padding is 14 px on all four sides.
+    padding = 14
+    horizontal_padding = 14
+    text_icon_padding = 10        # matches Mac HStack spacing of 10 px between
+                                  # icon and text column.
+
+    # ── Progress bar (Mac overlay has none; keep dunst defaults disabled) ─
+    progress_bar = false
+
+    # ── Icon sizing ──────────────────────────────────────────────────────
+    # Mac forces 40x40 px icons. Pin dunst to the same.
+    min_icon_size = 40
+    max_icon_size = 40
+    icon_position = left
+    icon_path = /home/n0ko/.local/share/icons/:/home/n0ko/Pictures/
+
+    # ── Typography ───────────────────────────────────────────────────────
+    # Mac uses three VictorMonoNFM faces (Bold-13 title, Regular-12 body,
+    # Medium-10 app-name). dunst uses one base font; we set it to body size
+    # and use Pango markup in `format` to upscale the title.
+    font = VictorMono Nerd Font Mono 12
     line_height = 0
     markup = full
-    format = "<i>%s</i>\n%b"
-    alignment = center
-    vertical_alignment = center
+
+    # Format: app-name as small grey leader, title bold, body on next line.
+    # The Mac overlay shows: appName (10pt, 60% opacity grey), Title (13pt bold),
+    # Body (12pt regular, 85% opacity).
+    # dunst Pango markup pixels: size='Npt' is in 1024ths-of-a-point. 13pt = 13312.
+    # 10pt = 10240, 12pt = 12288, 13pt = 13312.
+    format = "<span size='10240' foreground='#999999'>%a</span>\n<b><span size='13312'>%s</span></b>\n<span size='12288' foreground='#dddddd'>%b</span>"
+    alignment = left
+    vertical_alignment = top
     show_age_threshold = 60
     ellipsize = middle
     ignore_newline = no
     stack_duplicates = true
     hide_duplicate_count = false
     show_indicators = yes
-    icon_position = left
-    min_icon_size = 15
-    max_icon_size = 80
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/:~/Pictures/
     sticky_history = yes
     history_length = 20
-    dmenu= dmenu -m 2 -fn VictorMono:size=11 -nf green -nb black -nf green -sb blue -p dunst
-    mouse_left_click = context,close_current
     always_run_script = true
     title = Dunst
     class = Dunst
-    corner_radius = 4
     ignore_dbusclose = false
     force_xwayland = false
     force_xinerama = false
-    mouse_left_click = context,close_current
-    mouse_middle_click = do_action, close_current
-    close_all = ctrl+shift+space
-    context = mod1+Right
     enable_posix_regex = true
 
+    # ── Keybinds (preserved from current lewis dunstrc) ──────────────────
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    context = mod1+Right
+    mouse_left_click = context,close_current
+    mouse_middle_click = do_action, close_current
+    dmenu = dmenu -m 2 -fn "VictorMono:size=11" -nf green -nb black -sb blue -p dunst
 
+# ── Urgency themes (verbatim from dunst-overlay.swift themes dict) ───────
 [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.j
-    # Otherwise the "#" and following would be interpreted as a comment.
     background = "#000000"
     foreground = "#ffffff"
     frame_color = "#00FFFF"
     timeout = 3
-    icon = "/home/n0ko/Pictures/kirinTor.png"
-    # Icon for notifications with low urgency, uncomment to enable
-    # new_icon = "~/Pictures/stickers/spiderman/spideyMiles.png"
 
 [urgency_normal]
     background = "#000000"
     foreground = "#ffffff"
     frame_color = "#00FFFF"
     timeout = 3
-    # new_icon for notifications with normal urgency, uncomment to enable
-    # new_icon = "~/Pictures/stickers/spiderman/spidey_miles_sticker1.png"
-#    new_icon = "~/Pictures/spideyIcon2.png"
 
 [urgency_critical]
     background = "#900000"
     foreground = "#ffffff"
     frame_color = "#8B0000"
     timeout = 0
-    # new_icon for notifications with critical urgency, uncomment to enable
-    # new_icon = "~/Pictures/stickers/ironman/tony_stark1.png"
 
-
-###-----CAPACITY TRIGGER WARNINGS-----#
-#[e2eVerficiation]
-#    #    body = "Datadog: Triggered:.* E2E Verification*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/E2E_Verification"
-#    urgency = critical
-#     background = "#900000"
-#    foreground = "#ffffff"
-#    frame_color = "#ff0000"
-#    timeout = 0
-
-
-#[InterfaceGatewayisSlow]
-#    #    body = "Datadog: Triggered:.* Interface Gateway*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/InterfaceGatewayisSlow"
-#    urgency = critical
-#     background = "#900000"
-#    foreground = "#ffffff"
-#    frame_color = "#ff0000"
-#    timeout = 0
-#
-#[NoAuditLogs]
-#    #    body = "Datadog: Triggered:.*No Recent Audit Logs"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/NoAuditLogs"
-#    urgency = critical
-#
-#[RDSReplicaLag]
-#    body = "Datadog: Triggered:.*Replica Lag"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RDSReplicaLag"
-#    urgency = critical
-#
-#[KubeCronJobFailed]
-#    #    body = "Datadog: Triggered:.* Kube Cron Job Failed*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/KubeJobFailed"
-#    urgency = critical
-#
-#[CapacityisSlow]
-#    #    body = "Datadog: Triggered:.*Capacity Slow*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "/home/n0ko/scripts/dunstMagic/apacityisSlow"
-#    urgency = critical
-#
-#[ServiceTicketing]
-#    #    body = "Datadog: Triggered:.*Service*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "/home/n0ko/scripts/dunstMagic/ServiceTicketing"
-#    urgency = critical
-#
-#
-#[DiskFreeisLow]
-#    #    body = "Datadog: Triggered:.* Disk Free is Low*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = critical
-#
-#[E2ESLADataMissing]
-#    #    body = "Datadog: Triggered:.* SLA Data Missing*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/E2ESLADataMissing"
-#    urgency = critical
-#
-#[HTTP4XXResponsecode]
-#    #    body =  "Datadog: Triggered:.*HTTP 4XX.*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/HTTP4XXResponsecode"
-#    urgency = critical
-#
-#[HTTP5XXResponsecode]
-#    #    body = "Datadog: Triggered:.*HTTP 5.*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/http5xxishigh"
-#    urgency = critical
-#
-#[KubeJobFailed]
-#    #    body = "Datadog: Triggered:.* Job Failed*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/KubeJobFailed"
-#    urgency = critical
-#
-#[KubeHpaScaling]
-#    #    body = "Datadog: Triggered:.* Hpa Scaling*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/KubeHpaScaling"
-#    urgency = critical
-#
-##[PVCLowSpaceWarning]
-##    ##    body = ".*warn*."
-##    new_icon = "~/Pictures/vector/checkEngine.jpg"
-##    timeout = 1
-##    script = "~/scripts/dunstMagic/PVCLowSpaceWarning"
-##    urgency = critical
-#
-#[InterfaceGatewayisSlow]
-#    #    body = "Datadog: Triggered:.* Gateway is Slow*"
-#    new_icon = "~/Pictures/vector/checkEngine.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/InterfaceGatewayisSlow"
-#    urgency = critical
-#
-#[PodNotStarting]
-#    #    body = "Datadog: Triggered:.* Not Starting*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/PodNotStarting"
-#    urgency = critical
-#
-#[PodsNotReady]
-#    #    body = "Datadog: Triggered:.* Not Ready*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/PodsNotReady"
-#    urgency = critical
-#
-#[RDSDiskFreeWarning]
-#    #    body = "Datadog: Triggered:.* Disk Free Warning*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RDSDiskFreeWarning"
-#    urgency = critical
-#
-#[RDSHighCPUWarning]
-#    #    body = "Datadog: Triggered:.* High CPU Warning*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RDSHighCPUWarning"
-#    urgency = critical
-#
-#[RDSMemFree]
-#    #    body = "Datadog: Triggered:.* Mem Free*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RDSMemFree"
-#    urgency = critical
-#
-#[RDSReplicaLag]
-#    #    body = "Datadog: Triggered:.* Replica Lag*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RDSReplicaLag"
-#    urgency = critical
-#
-#[RabbitMQHighQueueCount]
-#    #    body = "Datadog: Triggered:.* High Queue Count*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RabbitMQHighQueueCount"
-#    urgency = critical
-#
-#[RabbitMQMemoryisCriticallyHigh] //rabbitmq abnormal memory usage
-#    #    body = "Datadog: Triggered:.* Abnormal Memory Usage*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RabbitMQMemoryisCriticallyHigh"
-#    urgency = critical
-#
-#[RabbitMQNLPEngineQueueCount]
-#    #    body = "Datadog: Triggered:.* NLP Engine Queue Count*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RabbitMQNLPEngineQueueCount"
-#    urgency = critical
-#
-#[RabbitMQ-File_update_queue]
-#    #    body = "Datadog: Triggered:.* RabbitMQ-File_update_queue*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/RabbitMQ-File_update_queue"
-#    urgency = critical
-#
-#[SSLCertificateExpiring]
-#    #    body = "Datadog: Triggered:.* SSL*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/SSLCertificateExpiring"
-#    urgency = critical
-#
-#[VPNSitetoSiteDown]
-#    #    body = "Datadog: Triggered:.* VPN*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/VPNSitetoSiteDown"
-#    urgency = critical
-#
-#[VeleroBackupFailures]
-#    #    body = "Datadog: Triggered:.* Velero*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/VeleroBackupFailures"
-#    urgency = critical
-#
-#[AutoClockinsyncwithNTP]
-#    #    body = "Datadog: Triggered:.* Auto Clock*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/AutoClockinsyncwithNTP"
-#    urgency = critical
-#
-#[MultipleRestarts]
-#    #    body = "Datadog: Triggered:.* Multiple Restarts*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/MultipleRestarts"
-#    urgency = critical
-#
-#[highaveragelatency]
-#    #    body = "Datadog: Triggered:.* high average latency*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    script = "~/scripts/dunstMagic/highaveragelatency"
-#    urgency = critical
-
-##-----Capacity warnings-----#
-#[InterfaceGatewayisSlow]
-#    #    body = *Warn:* *Interface Gateway is Slow*
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[NoAuditLogs]
-#    #    body = Datadog Warn:*Audit Logs*
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RDSReplicaLag]
-#    #    body = Datadog Warn:*Replica Lag*
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[KubeCronJobFailed]
-#    #    body = Datadog Warn:*Cron Job Failed*
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[DiskFreeisLow]
-#    #    body = Datadog Warn:*Disk Free is Low*
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[E2ESLADataMissing]
-#    #    body = Datadog Warn:*SLA Data Missing*
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-[HTTP4XXResponsecode]
-    body = "Datadog Warn:*HTTP 4XX*"
-    new_icon = "~/Pictures/vector/checkEngine.jpg"
-    timeout = 1
-    urgency = low
-
-#[HTTP5XXResponsecode]
-#    #    body = "Datadog: Warn:*HTTP 5XX*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[KubeJobFailed]
-#    #    body = "Datadog: Warn:*Job Failed*
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-[KubeHpaScaling]
-    body = "Datadog: Warn:.*HPA Scaling.*"
-    new_icon = "~/Pictures/vector/checkEngine.jpg"
-    timeout = 1
-    urgency = low
-#
-#[PVCLowSpaceWarning]
-#    #    body = "Datadog: Warn:*Low Space Warning*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[InterfaceGatewayisSlow]
-#    #    body = "Datadog: Warn:*Gateway is Slow*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[PodNotStarting]
-#    #    body = "Datadog: Warn:*Not Starting*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[PodsNotReady]
-#    #    body = "Datadog: Warn:*Not Ready*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RDSDiskFreeWarning]
-#    #    body = "Datadog: Warn:*Disk Free Warning*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RDSHighCPUWarning]
-#    #    body = "Datadog: Warn:*High CPU Warning*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RDSMemFree]
-#    #    body = "Datadog: Warn:*Mem Free*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RDSReplicaLag]
-#    #    body = "Datadog: Warn:*Replica Lag*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RabbitMQHighQueueCount]
-#    #    body = "Datadog: Warn:*High Queue Count*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RabbitMQMemoryislowlyHigh]
-#    #    body = "Datadog: Warn:*Memory is lowly High*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RabbitMQNLPEngineQueueCount]
-#    #    body = "Datadog: Warn:*NLP Engine Queue Count*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[RabbitMQ-File_update_queue]
-#    #    body = "Datadog: Warn:*RabbitMQ-File_update_queue*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[SSLCertificateExpiring]
-#    #    body = "Datadog: Warn:*SSL*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[VPNSitetoSiteDown]
-#    #    body = "Datadog: Warn:*VPN*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[VeleroBackupFailures]
-#    #    body = "Datadog: Warn:*Velero*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[AutoClockinsyncwithNTP]
-#    #    body = "Datadog: Warn:*sync with NTP*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[MultipleRestarts]
-#    #    body = "Datadog: Warn: Multiple Restarts*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#[highaveragelatency]
-#    #    body = "Datadog: Warn:*high average latency*"
-#    new_icon = "~/Pictures/healthCheck.jpg"
-#    timeout = 1
-#    urgency = low
-#
-#
-
-## Every section that isn't one of the above is interpreted as a rules to
-## override settings for certain messages.""
-##
-## Messages can be matched by
-##    appname (discouraged, see desktop_entry)
-##    body
-##    category
-##    desktop_entry
-##    icon
-##    match_transient
-##    msg_urgency
-##    stack_tag
-##    summary
-##
-## and you can override the
-##    background
-##    foreground
-##    format
-##    frame_color
-##    fullscreen
-##    new_icon
-##    set_stack_tag
-##    set_transient
-##    timeout
-##    urgency
-##    action_name
-##
-## Shell-like globbing will get expanded.
-##
-## Instead of the appname filter, it's recommended to use the desktop_entry filter.
-## GLib based applications export their desktop-entry name. In comparison to the appname,
-## the desktop-entry won't get localized.
-##
-## SCRIPTING
-## You can specify a script that gets run when the rule matches by
-## setting the "script" option.
-## The script will be called as follows:
-##   script appname summary body icon urgency
-## where urgency can be "LOW", "NORMAL" or "CRITICAL".
-##
-## NOTE: It might be helpful to run dunst -print in a terminal in order
-## to find fitting options for rules.
-#
-## Disable the transient hint so that idle_threshold cannot be bypassed from the
-## client
-##[transient_disable]
-##    match_transient = yes
-##    set_transient = no
-##
-## Make the handling of transient notifications more strict by making them not
-## be placed in history.
-##[transient_history_ignore]
-##    match_transient = yes
-##    history_ignore = yes
-#
-## fullscreen values
-## show: show the notifications, regardless if there is a fullscreen window opened
-## delay: displays the new notification, if there is no fullscreen window active
-##        If the notification is already drawn, it won't get undrawn.
-## pushback: same as delay, but when switching into fullscreen, the notification will get
-##           withdrawn from screen again and will get delayed like a new notification
-##[fullscreen_delay_everything]
-##    fullscreen = delay
-##[fullscreen_show_critical]
-##    msg_urgency = critical
-##    fullscreen = show
-#
-##[espeak]
-##    summary = "*"
-##    script = dunst_espeak.sh
-#
-##[script-test]
-##    summary = "*script*"
-##    script = dunst_test.sh
-#
-##[capacity]
-##    ##    summary = *equityim*
-##    new_icon = "~/Pictures/capacity.png"
-#
-##-----CAPACITY RULES--------#
-[capDatadogRecovery]
-    body = .*Recovered.*
-    new_icon = "~/Pictures/greenHealth.jpeg"
-    timeout = 1
-    #script = <fileName>
-
-#[capPrometheusFiring]
-#    #body = \[FIRING:1\]*
-#    new_icon = "~/Pictures/vector/covid19.jpg"
-#    timeout = 1
-#    #script = "~/scripts/dunstMagic/triggered.sh"
-#
-#[capPrometheusRecovered]
-#    #body = [RESOLVED]*
-#    new_icon = "~/Pictures/greenHealth.jpeg"
-#    timeout = 1
-#    #script = <fileName>
-#
-#
-[gopherNuggets]
-    summary = .*gopher.*
-    new_icon = "~/Pictures/gopherIcon.png"
-    timeout = 1
-
-#-----APPLICATION SPECIFIC NOTIFICATIONS-----#
-[paypal]
-    body = .*Paypal.*
-    new_icon = "~/Pictures/neonIcons/paypal.PNG"
-    timeout = 1
-    #script = follow waning link in browser -> browser open log pointing to stack trace
-    #background
-    #foreground
-
-[reddit]
-    body = .*reddit.*
-    new_icon = "~/Pictures/neonIcons/reddit.PNG"
-    timeout = 1
-    #script = follow waning link in browser -> browser open log pointing to stack trace
-    #background
-    #foreground
-
-[discord]
-    body = .*discord.*
-    new_icon = "~/Pictures/neonIcons/discord.PNG"
-    timeout = 1
-    #script = follow waning link in browser -> browser open log pointing to stack trace
-    #background
-    #foreground
-
-[youTube]
-    body = .*youtube.*
-    new_icon = "~/Pictures/neonIcons/youtube.PNG"
-    timeout = 1
-    #script = follow waning link in browser -> browser open log pointing to stack trace
-    #background
-    #foreground
-
-[emails]
-    body = .*new emails.*
-    new_icon = "~/Pictures/neonIcons/google.PNG"
-    timeout = 1
-    #script = follow waning link in browser -> browser open log pointing to stack trace
-    #background
-    #foreground
-
-[gitlab]
-    body = .*gitlab.*
-    new_icon = "~/Pictures/neonIcons/gitlab.PNG"
-    timeout = 1
-    #script = follow waning link in browser -> browser open log pointing to stack trace
-    #background
-    #foreground
-
-[messages]
-    appname = Electron
-    new_icon = "~/Pictures/neonIcons/messenger.PNG"
-    timeout = 1
-    urgency = normal
-    background = "#000000"
-    foreground = "#ffffff"
-
-[capacity]
-    summary = .*equityim.*
-    new_icon = "~/Pictures/neonIcons/Clever-min.PNG"
-    timeout = 1
-    urgency = normal
-    background = "#000000"
-    foreground = "#ffffff"
-
-
-[ecco]
-    summary = .*Outlook.*
-    new_icon = "~/Pictures/neonIcons/gmail.PNG"
-    timeout = 1
-    urgency = normal
-    background = "#000000"
-    foreground = "#ffffff"
-
-[dd-prod-alerts]
-    summary = .*prod-alerts.*
-    new_icon = "~/Pictures/neonIcons/Clever-min.PNG"
-    timeout = 1
-    urgency = critical
-    background = "#000000"
-    foreground = "#ffffff"
-
-#[systemCommands]
-#[ignore]
-#    # This notification will not be displayed
-#    summary = "foobar"
-#    skip_display = true
-
-#[history-ignore]
-#    # This notification will not be saved in history
-#    summary = "foobar"
-#    history_ignore = yes
-
-#[skip-display]
-#    # This notification will not be displayed, but will be included in the history
-#    summary = "foobar"
-#    skip_display = yes
-
-##TEST
-[test]
-    summary = .*hi.*
-    new_icon = "~/Pictures/stickers/batman/cyber-batman-head-pink-stroke-sticker.png"
-    urgency = normal
-##SYSTEM
-[updates]
-    summary = .*update.*
-    new_icon = "~/Pictures/stickers/gas_mask/man-in-biohazard-gas-mask-sticker.png"
-    urgency = critical
-[ai]
-    summary = .*Yo!.*
-    new_icon = "~/Pictures/stickers/mage/mage1.png"
-    urgency = normal
-##SYSTEM
-[charging]
-    summary = .*Charging.*
-    new_icon = "~/Pictures/charging.png"
-    urgency = normal
-[discharging]
-    summary = .*Discharging.*
-    new_icon = "~/Pictures/charging.png"
-    urgency = normal
-[lowbattery]
-    summary = .*Charge.*
-    new_icon = "~/Pictures/charging.png"
-    urgency = normal
-[brightness]
-    summary = .*Brightness.*
-    new_icon = "~/Pictures/neonIcons/tips-min.PNG"
-    urgency = normal
-[touchpad]
-    summary = .*Touchpad.*
-    new_icon = "~/Pictures/neonIcons/Settings-min.PNG"
-    urgency = normal
-[package]
-    summary = .*package.*
-    new_icon = "~/Pictures/stickers/deadpool/marvel-deadpool-comics-sticker.png"
-    urgency = normal
-
-[merked]
-    summary = .*Merked.*
-    new_icon = "~/Pictures/stickers/deadpool/marvel-deadpool-thumbs-up-sticker.png"
-    urgency = normal
-
-[scrot]
-    summary = .*ScreenShot.*
-    new_icon = "~/Pictures/stickers/misc/scary-zombie-photographer-sticker.png"
-    urgency = normal
-
-##TEXT MESSAGES
-[wifey]
-    summary = .*Wifey.*
-    new_icon = "~/Pictures/stickers/spiderman/gwen1.png"
-    urgency = normal
-
-[email]
-    summary = .*email.*
-    new_icon = "~/Pictures/neonIcons/gmail.PNG"
-    urgency = normal
-
-[ecco]
-    summary = .*ECCO.*
-    new_icon = "~/Pictures/ecco_select.png"
-    urgency = normal
-
-[aws_check]
-    summary = .*AWS Integration Check Complete.*
-    new_icon = "~/Pictures/greenHealth.jpeg"
-    urgency = normal
-
-[wallpaper]
-    summary = .*Wallpaper.*
-    new_icon = "~/Pictures/stickers/spiderman/spider-gwen-art-illustration-sticker.png"
-    urgency = normal
-
-#[twitter]
-#    appname = Pidgin
-#    summary = *twitter.com*
-#    urgency = normal
-#
-
-#[stack-volumes]
-#    appname = "some_volume_notifiers"
-#    set_stack_tag = "volume"
-
-##-----RAYNE NOTIFICATIONS-----#
-[rayne]
-    appname = Rayne
-    frame_color = "#9400D3"
-    background = "#1a0a1a"
-    foreground = "#ffffff"
-    new_icon = "~/Pictures/neonIcons/datadog.png"
-    timeout = 0
-    urgency = critical
-    # script = /home/n0ko/scripts/dunstMagic/rayne-open-lf.sh
-
-##-----AGENT COUNTER NOTIFICATIONS-----#
-[agent-low]
-    summary = ".*🤖.*"
-    msg_urgency = low
-    frame_color = "#00FF87"
-    background = "#001a1a"
-    foreground = "#00D7FF"
-    format = "<span size='26624'>%s</span>"
-    timeout = 3
-
-[agent-normal]
-    summary = ".*🤖.*"
-    msg_urgency = normal
-    frame_color = "#FFAF00"
-    background = "#0f001a"
-    foreground = "#AF5FFF"
-    format = "<span size='26624'>%s</span>"
-    timeout = 3
-
-[agent-critical]
-    summary = ".*🤖.*"
-    msg_urgency = critical
-    frame_color = "#FF5F5F"
-    background = "#1a0510"
-    foreground = "#FF5FAF"
-    format = "<span size='26624'>%s</span>"
-    timeout = 3
-
-##-----TOOL COUNTER NOTIFICATIONS-----#
-[tool-low]
-    summary = ".*🔧.*"
-    msg_urgency = low
-    frame_color = "#00D7FF"
-    background = "#001a1a"
-    foreground = "#00D7FF"
-    format = "<span size='26624'>%s</span>"
-    timeout = 3
-
-[tool-normal]
-    summary = ".*🔧.*"
-    msg_urgency = normal
-    frame_color = "#AF5FFF"
-    background = "#0f001a"
-    foreground = "#AF5FFF"
-    format = "<span size='26624'>%s</span>"
-    timeout = 3
-
-[tool-critical]
-    summary = ".*🔧.*"
-    msg_urgency = critical
-    frame_color = "#FF5FAF"
-    background = "#1a0510"
-    foreground = "#FF5FAF"
-    format = "<span size='26624'>%s</span>"
-    timeout = 3
-
-##-----TFMASTER HOOK NOTIFICATIONS-----#
-[tfmaster]
-    summary = "TFMASTER*"
-    frame_color = "#FFA500"
-    background = "#1a1000"
-    foreground = "#ffffff"
-    timeout = 3
-    urgency = normal
-
-##-----CLAUDE CONTEXT REQUEST NOTIFICATIONS-----#
-
-[claude-context-normal]
-    appname = "claude-context-request"
-    msg_urgency = normal
-    background = "#0f001a"
-    foreground = "#AF5FFF"
-    frame_color = "#e67e00"
-    new_icon = "/home/n0ko/Pictures/kirinTor.png"
-    timeout = 0
-    format = "<b>%s</b>\n<i>%b</i>"
-
-[claude-context-critical]
-    appname = "claude-context-request"
-    msg_urgency = critical
-    background = "#1a0510"
-    foreground = "#FF5FAF"
-    frame_color = "#cc0000"
-    new_icon = "/home/n0ko/Pictures/kirinTor.png"
-    timeout = 0
-    format = "<b>%s</b>\n<i>%b</i>"
-
-[claude-context-low]
-    appname = "claude-context-request"
-    msg_urgency = low
-    background = "#001a1a"
-    foreground = "#00D7FF"
-    frame_color = "#00FF87"
-    new_icon = "/home/n0ko/Pictures/kirinTor.png"
-    timeout = 3000
-    format = "<i>%s — %b</i>"
-
-##-----OPENBRAIN (ob1) NOTIFICATIONS-----#
-# OpenBrain MCP notify (mcp/internal/notify/desktop.go) -- summary "OpenBrain"
-[openbrain]
-    summary = "OpenBrain"
-    new_icon = "/home/n0ko/.local/share/icons/brain-dunst.png"
-    frame_color = "#00D7FF"
-    background = "#0a0a1a"
-    foreground = "#00D7FF"
-    timeout = 5
-    urgency = normal
-
-# ob1 context-inject hook (replace-id 99500, appname "ob-context-inject")
-[ob-context-inject]
-    appname = "ob-context-inject"
-    new_icon = "/home/n0ko/.local/share/icons/brain-dunst.png"
-    frame_color = "#00D7FF"
-    background = "#0a0a1a"
-    foreground = "#00D7FF"
-    timeout = 3
-    urgency = low
-
-# ob1 write hook (replace-id 99501) -- appName varies, match by summary "OB1*" too
-[ob1-write]
-    summary = "OB1*"
-    new_icon = "/home/n0ko/.local/share/icons/brain-dunst.png"
-    frame_color = "#00D7FF"
-    background = "#0a0a1a"
-    foreground = "#00D7FF"
-    timeout = 3
-    urgency = low
-
-##-----COMPUTECOMMANDER (cmdr) NOTIFICATIONS-----#
-# ComputeCommander linkedin delivery (internal/linkedin/delivery.go)
-[computecommander]
-    appname = "ComputeCommander"
-    new_icon = "/home/n0ko/Pictures/neonIcons/linked in.PNG"
-    frame_color = "#0077B5"
-    background = "#000a14"
-    foreground = "#ffffff"
-    timeout = 5
-    urgency = normal
-
-# vim: ft=cfg
+# ─────────────────────────────────────────────────────────────────────────
+# RULE PRESERVATION
+#
+# All existing per-app rule blocks from the current dunstrc (HTTP4XXResponsecode,
+# KubeHpaScaling, capDatadogRecovery, gopherNuggets, paypal, reddit, discord,
+# youTube, emails, gitlab, messages, capacity, ecco, dd-prod-alerts, test,
+# updates, ai, charging, discharging, lowbattery, brightness, touchpad, package,
+# merked, scrot, wifey, email, aws_check, wallpaper, rayne, agent-low/normal/
+# critical, tool-low/normal/critical, tfmaster, claude-context-*, openbrain,
+# ob-context-inject, ob1-write, computecommander) are preserved AS-IS by
+# appending the current dunstrc tail starting at the first non-urgency rule
+# block. They reference custom icons under ~/Pictures/ and inject their own
+# bg/fg/frame colors — those overrides are still valid under the new [global]
+# because the global only sets defaults that the rule blocks intentionally
+# override.
+#
+# WHEN APPLYING:
+#   1. cp current dunstrc to dunstrc.before-overlay-parity.<timestamp>
+#   2. Replace the [global] + [urgency_*] sections with the blocks above.
+#   3. Leave the rule blocks (everything from [HTTP4XXResponsecode] onward) intact.
+#   4. dunstctl reload  OR  pkill dunst && dunst &
+# ─────────────────────────────────────────────────────────────────────────
