@@ -18,56 +18,53 @@
     # forces a fixed width. `offset = 12x23` places notifications flush directly
     # below the dwm/dwmblocks status bar (measured 23 px via xdotool active-window
     # y=23 on 2026-05-27). No Mac-parity Y inset — user wants flush, no gap.
-    width = (320, 320)
-    height = 300
+    # 2026-05-27 14:45 size-match pass: lewis eDP-1 = 2560px/288mm (~226 DPI)
+    # while mac 16" XDR = ~3456 native px / 344mm ~ retina 2x. Mac SwiftUI 320pt
+    # panel renders physically ~73mm wide; lewis 320px panel was only ~36mm wide.
+    # Scaling all geometry/typography by 2x to match physical size on lewis.
+    width = (560, 560)
+    height = (0, 600)
     origin = top-right
-    offset = 12x23                # y = 23px (dwmblocks bar height); flush, no gap
+    offset = (24, 23)                # x doubled to 24; y stays at 23 (dwmblocks bar height, unchanged)
     scale = 1
 
     # ── Stacking ─────────────────────────────────────────────────────────
     notification_limit = 1        # only one on-screen at a time; queue depth shown via dwmblocks badge
-    gap_size = 6                  # Mac shows one panel at a time; on lewis a small
-                                  # positive gap is the closest "tile downward" feel.
+    gap_size = 12                 # 2x mac-parity tile gap.
 
     # ── Transparency / frame / corner ────────────────────────────────────
     transparency = 0              # fully opaque (was 15; user reverted because dwm side panel was readable behind it)
-    corner_radius = 10            # Mac uses 10 px
-    frame_width = 2               # Mac uses 1.5 px stroke. dunst is integer-only;
-                                  # 2 is the nearest visually matching value.
+    corner_radius = 20            # Mac 10pt @ retina 2x = 20px
+    frame_width = 3               # Mac 1.5pt stroke @ 2x = 3px
     frame_color = "#00FFFF"
     separator_height = 0
     separator_color = frame
 
     # ── Padding ──────────────────────────────────────────────────────────
-    # Mac inner padding is 14 px on all four sides.
-    padding = 14
-    horizontal_padding = 14
-    text_icon_padding = 10        # matches Mac HStack spacing of 10 px between
-                                  # icon and text column.
+    # Mac inner padding 14pt @ 2x = 28px on all four sides.
+    padding = 28
+    horizontal_padding = 28
+    text_icon_padding = 20        # mac HStack 10pt @ 2x
 
     # ── Progress bar (Mac overlay has none; keep dunst defaults disabled) ─
     progress_bar = false
 
     # ── Icon sizing ──────────────────────────────────────────────────────
-    # Mac forces 40x40 px icons. Pin dunst to the same.
-    min_icon_size = 40
-    max_icon_size = 40
+    # Mac 40pt @ 2x = 80px icons.
+    min_icon_size = 80
+    max_icon_size = 80
     icon_position = left
     icon_path = /home/n0ko/.local/share/icons/:/home/n0ko/Pictures/
 
     # ── Typography ───────────────────────────────────────────────────────
     # Mac uses three VictorMonoNFM faces (Bold-13 title, Regular-12 body,
-    # Medium-10 app-name). dunst uses one base font; we set it to body size
-    # and use Pango markup in `format` to upscale the title.
+    # Medium-10 app-name). All sizes doubled for retina-equivalent physical size.
     font = VictorMono Nerd Font Mono 12
     line_height = 0
     markup = full
 
     # Format: app-name as small grey leader, title bold, body on next line.
-    # The Mac overlay shows: appName (10pt, 60% opacity grey), Title (13pt bold),
-    # Body (12pt regular, 85% opacity).
-    # dunst Pango markup pixels: size='Npt' is in 1024ths-of-a-point. 13pt = 13312.
-    # 10pt = 10240, 12pt = 12288, 13pt = 13312.
+    # Mac points doubled: 10pt->20pt (20480), 13pt->26pt (26624), 12pt->24pt (24576).
     format = "<span size='10240' foreground='#999999'>%a</span>\n<b><span size='13312'>%s</span></b>\n<span size='12288' foreground='#dddddd'>%b</span>"
     alignment = left
     vertical_alignment = top
@@ -114,6 +111,12 @@
     frame_color = "#8B0000"
     timeout = 0
 
+# Per-notification frame color: green for claude-lazy-plugin (Shortcuts-min icon)
+# Mirrors mac SwiftUI overlay ($FR=#a8ff3e in hookio.NotifyStyled).
+[lazy-plugin-green-frame]
+    appname = "claude-lazy-plugin"
+    frame_color = "#a8ff3e"
+
 # ─────────────────────────────────────────────────────────────────────────
 # RULE PRESERVATION
 #
@@ -136,3 +139,19 @@
 #   3. Leave the rule blocks (everything from [HTTP4XXResponsecode] onward) intact.
 #   4. dunstctl reload  OR  pkill dunst && dunst &
 # ─────────────────────────────────────────────────────────────────────────
+
+# ─────────────────────────────────────────────────────────────────────────
+# [claude-intent] — intent-verification gate notifications (claude-hooks intent).
+# Mac parity: matches the dunst-overlay intent theme on the mac host exactly.
+#   icon  : precision-target-reticle-focus (semantic: intent events only)
+#   bg    : #0d0d10  (near-black)
+#   fg    : #FF6B35  (orange alert)
+#   frame : #FF6B35  (orange alert — emulates terminal-notifier Claude scheme)
+# appname is the FILTER key (required — a rule with only action keys is inert).
+# ─────────────────────────────────────────────────────────────────────────
+[claude-intent]
+    appname = "claude-intent"
+    background = "#0d0d10"
+    foreground = "#FF6B35"
+    frame_color = "#FF6B35"
+    new_icon = precision-target-reticle-focus
