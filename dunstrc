@@ -178,7 +178,7 @@
     appname = "pi-intent-eval"
     background = "#1a1a2e"
     foreground = "#ff5555"
-    frame_color = "#ff5555"
+    frame_color = "#7FB4FF"
     icon = ""
 
 # ─────────────────────────────────────────────────────────────────────────
@@ -187,5 +187,5 @@
 # ─────────────────────────────────────────────────────────────────────────
 [pi-lazy-plugin]
     appname = "pi-lazy-plugin"
-    frame_color = "#a8ff3e"
+    frame_color = "#7FB4FF"
     icon = ""
