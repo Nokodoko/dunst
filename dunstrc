@@ -145,13 +145,47 @@
 # Mac parity: matches the dunst-overlay intent theme on the mac host exactly.
 #   icon  : precision-target-reticle-focus (semantic: intent events only)
 #   bg    : #0d0d10  (near-black)
-#   fg    : #FF6B35  (orange alert)
-#   frame : #FF6B35  (orange alert — emulates terminal-notifier Claude scheme)
+#   fg    : #D97757  (Claude terracotta)
+#   frame : #D97757  (Claude terracotta — terminal-notifier Claude brand accent)
 # appname is the FILTER key (required — a rule with only action keys is inert).
 # ─────────────────────────────────────────────────────────────────────────
 [claude-intent]
     appname = "claude-intent"
     background = "#0d0d10"
-    foreground = "#FF6B35"
-    frame_color = "#FF6B35"
+    foreground = "#D97757"
+    frame_color = "#D97757"
     new_icon = precision-target-reticle-focus
+
+# ─────────────────────────────────────────────────────────────────────────
+# [pi-intent] — pi intent-gate notifications (pi-plugin-intent →
+# Mutations.Warnings → piNotify). Mirrors [claude-intent] shape with a
+# pi-distinct blue frame. No bespoke icon — π prefix is the identity.
+# icon="" defeats any inherited theme icon.
+# ─────────────────────────────────────────────────────────────────────────
+[pi-intent]
+    appname = "pi-intent"
+    background = "#0d0d10"
+    foreground = "#7FB4FF"
+    frame_color = "#7FB4FF"
+    icon = ""
+
+# ─────────────────────────────────────────────────────────────────────────
+# [pi-intent-eval] — pi tool-block / eval-block notifications.
+# Mirrors the (rule-less) claude-intent-eval surface; pi gives it an
+# explicit rule with a red frame to read as a hard block. icon="" same.
+# ─────────────────────────────────────────────────────────────────────────
+[pi-intent-eval]
+    appname = "pi-intent-eval"
+    background = "#1a1a2e"
+    foreground = "#ff5555"
+    frame_color = "#ff5555"
+    icon = ""
+
+# ─────────────────────────────────────────────────────────────────────────
+# [pi-lazy-plugin] — pi lazy-loader green frame, mirroring
+# [lazy-plugin-green-frame] for claude-lazy-plugin. icon="" same.
+# ─────────────────────────────────────────────────────────────────────────
+[pi-lazy-plugin]
+    appname = "pi-lazy-plugin"
+    frame_color = "#a8ff3e"
+    icon = ""
