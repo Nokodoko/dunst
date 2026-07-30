@@ -249,25 +249,28 @@
     script = /home/n0ko/.local/bin/statusbar/notif-sink
     skip_display = true
 
-# ── Popup exemptions ─────────────────────────────────────────────────────
-# These still draw on screen AND still land in the bar.
-
-# The safety valve: a pill that self-clears in 8s is too easy to miss for a
-# genuine failure.
-[popup-critical]
-    msg_urgency = critical
+# ── Popup exemptions: rayne webhooks ONLY ────────────────────────────────
+# Everything else is bar-only. [to-statusbar] above matches every
+# notification including urgency=critical, so nothing else draws over the
+# screen. Consequence, accepted deliberately: a critical failure appears
+# only as a bar pill that self-clears after DWMBLOCKS_NOTIF_TTL (8s).
+# `dunstctl history` keeps the full text; `dunstctl history-pop` replays it.
+#
+# rayne is the webhook server -- its alerts are the one class that must
+# interrupt rather than scroll past in the bar. timeout = 0 makes them
+# persist until dismissed, matching the long-standing [rayne] rule.
+#
+# The appname is "Rayne" (capital R). [global] sets enable_posix_regex, so
+# matching is a case-SENSITIVE regex; [Rr] guards against case variance at
+# the emitter.
+#
+# This must stay AFTER [to-statusbar] -- rules apply in file order and
+# later rules win. Moving it above would silently re-suppress it.
+[popup-rayne]
+    appname = "[Rr]ayne"
     skip_display = false
+    timeout = 0
 
-[popup-icarus]
-    appname = "icarus"
-    skip_display = false
-
-[popup-killer]
-    appname = "killer"
-    skip_display = false
-
-# Geometry changes must stay visible — and notif-sink keys off this appname
-# to re-read the output width and re-scale the field for eDP-1 vs HDMI-1.
-[popup-display-switch]
-    appname = "display-switch"
-    skip_display = false
+# Note: notif-sink's display-switch handling is independent of all this. It
+# keys off the appname to re-read the output width and re-scale the field
+# for eDP-1 vs HDMI-1, and still runs while the popup is suppressed.
