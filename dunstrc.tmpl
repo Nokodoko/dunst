@@ -1,0 +1,273 @@
+# ─────────────────────────────────────────────────────────────────────
+# dunstrc.tmpl — TEMPLATE. Rendered to dunstrc by render-dunstrc.sh,
+# which display-switch.sh calls on every display switch.
+#
+# EDIT THIS FILE, NOT dunstrc. dunstrc is generated and overwritten.
+#
+# Placeholder tokens are substituted per widget scale; everything
+# else is passed through untouched.
+# ─────────────────────────────────────────────────────────────────────
+# dunstrc — proposed configuration for 1:1 parity with the macOS dunst-overlay
+# (SwiftUI floating panel at ~/.local/bin/dunst-overlay on the Mac).
+#
+# Source of truth: /Users/n0ko/.local/src/dunst-overlay.swift (Mac).
+# Generated: 2026-05-27. DO NOT APPLY YET — review first.
+#
+# Mapping table: /tmp/mapping-table.md
+# Original (pre-change) backup recommendation:
+#   cp ~/.config/dunst/dunstrc ~/.config/dunst/dunstrc.before-overlay-parity.$(date +%Y%m%d-%H%M%S)
+
+[global]
+    monitor = @@MONITOR@@
+    follow = none
+
+    # ── Geometry / spawn ─────────────────────────────────────────────────
+    # Mac uses a fixed 320 px panel anchored 12 px from the top-right of the
+    # visible screen frame. dunst's `width` accepts (min, max); making min=max
+    # forces a fixed width. `offset = 12x23` places notifications flush directly
+    # below the dwm/dwmblocks status bar (measured 23 px via xdotool active-window
+    # y=23 on 2026-05-27). No Mac-parity Y inset — user wants flush, no gap.
+    # 2026-05-27 14:45 size-match pass: lewis eDP-1 = 2560px/288mm (~226 DPI)
+    # while mac 16" XDR = ~3456 native px / 344mm ~ retina 2x. Mac SwiftUI 320pt
+    # panel renders physically ~73mm wide; lewis 320px panel was only ~36mm wide.
+    # Scaling all geometry/typography by 2x to match physical size on lewis.
+    width = (@@WIDTH@@, @@WIDTH@@)
+    height = (0, @@HEIGHT@@)
+    origin = bottom-left
+    offset = (@@OFFSET_X@@, @@OFFSET_Y@@)                # flush under dwmblocks bar (user_bh=34)
+    scale = 1
+
+    # ── Stacking ─────────────────────────────────────────────────────────
+    notification_limit = 1        # only one on-screen at a time; queue depth shown via dwmblocks badge
+    gap_size = @@GAP@@                 # 2x mac-parity tile gap.
+
+    # ── Transparency / frame / corner ────────────────────────────────────
+    transparency = 0              # fully opaque (was 15; user reverted because dwm side panel was readable behind it)
+    corner_radius = @@RADIUS@@            # Mac 10pt @ retina 2x = 20px
+    frame_width = @@FRAME@@               # Mac 1.5pt stroke @ 2x = 3px
+    frame_color = "#00FFFF"
+    separator_height = 0
+    separator_color = frame
+
+    # ── Padding ──────────────────────────────────────────────────────────
+    # Mac inner padding 14pt @ 2x = 28px on all four sides.
+    padding = @@PAD@@
+    horizontal_padding = @@HPAD@@
+    text_icon_padding = @@TIPAD@@        # mac HStack 10pt @ 2x
+
+    # ── Progress bar (Mac overlay has none; keep dunst defaults disabled) ─
+    progress_bar = false
+
+    # ── Icon sizing ──────────────────────────────────────────────────────
+    # Mac 40pt @ 2x = 80px icons.
+    min_icon_size = @@ICON@@
+    max_icon_size = @@ICON@@
+    icon_position = left
+    icon_path = /home/n0ko/.local/share/icons/:/home/n0ko/Pictures/
+
+    # ── Typography ───────────────────────────────────────────────────────
+    # Mac uses three VictorMonoNFM faces (Bold-13 title, Regular-12 body,
+    # Medium-10 app-name). All sizes doubled for retina-equivalent physical size.
+    font = VictorMono Nerd Font Mono 10
+    line_height = 0
+    markup = full
+
+    # Format: app-name as small grey leader, title bold, body on next line.
+    # Mac points doubled: 10pt->20pt (20480), 13pt->26pt (26624), 12pt->24pt (24576).
+    format = "<span size='10240' foreground='#999999'>%a</span>\n<b><span size='13312'>%s</span></b>\n<span size='12288' foreground='#dddddd'>%b</span>"
+    alignment = left
+    vertical_alignment = top
+    show_age_threshold = 60
+    ellipsize = middle
+    ignore_newline = no
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = yes
+    sticky_history = yes
+    history_length = 20
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    ignore_dbusclose = false
+    force_xwayland = false
+    force_xinerama = false
+    enable_posix_regex = true
+
+    # ── Keybinds (preserved from current lewis dunstrc) ──────────────────
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    context = mod1+Right
+    mouse_left_click = context,close_current
+    mouse_middle_click = do_action, close_current
+    dmenu = dmenu -m 0 -fn "VictorMono:size=11" -nf green -nb black -sb blue -p dunst
+    browser = /bin/vivaldi -new-tab
+
+# ── Urgency themes (verbatim from dunst-overlay.swift themes dict) ───────
+[urgency_low]
+    background = "#000000"
+    foreground = "#ffffff"
+    frame_color = "#00FFFF"
+    timeout = 3
+
+[urgency_normal]
+    background = "#000000"
+    foreground = "#ffffff"
+    frame_color = "#00FFFF"
+    timeout = 3
+
+[urgency_critical]
+    background = "#900000"
+    foreground = "#ffffff"
+    frame_color = "#8B0000"
+    timeout = 0
+
+# Per-notification frame color: green for claude-lazy-plugin (Shortcuts-min icon)
+# Mirrors mac SwiftUI overlay ($FR=#a8ff3e in hookio.NotifyStyled).
+[lazy-plugin-green-frame]
+    appname = "claude-lazy-plugin"
+    frame_color = "#a8ff3e"
+
+# ─────────────────────────────────────────────────────────────────────────
+# RULE PRESERVATION
+#
+# All existing per-app rule blocks from the current dunstrc (HTTP4XXResponsecode,
+# KubeHpaScaling, capDatadogRecovery, gopherNuggets, paypal, reddit, discord,
+# youTube, emails, gitlab, messages, capacity, ecco, dd-prod-alerts, test,
+# updates, ai, charging, discharging, lowbattery, brightness, touchpad, package,
+# merked, scrot, wifey, email, aws_check, wallpaper, rayne, agent-low/normal/
+# critical, tool-low/normal/critical, tfmaster, claude-context-*, openbrain,
+# ob-context-inject, ob1-write, computecommander) are preserved AS-IS by
+# appending the current dunstrc tail starting at the first non-urgency rule
+# block. They reference custom icons under ~/Pictures/ and inject their own
+# bg/fg/frame colors — those overrides are still valid under the new [global]
+# because the global only sets defaults that the rule blocks intentionally
+# override.
+#
+# WHEN APPLYING:
+#   1. cp current dunstrc to dunstrc.before-overlay-parity.<timestamp>
+#   2. Replace the [global] + [urgency_*] sections with the blocks above.
+#   3. Leave the rule blocks (everything from [HTTP4XXResponsecode] onward) intact.
+#   4. dunstctl reload  OR  pkill dunst && dunst &
+# ─────────────────────────────────────────────────────────────────────────
+
+# ─────────────────────────────────────────────────────────────────────────
+# [claude-intent] — intent-verification gate notifications (claude-hooks intent).
+# Mac parity: matches the dunst-overlay intent theme on the mac host exactly.
+#   icon  : precision-target-reticle-focus (semantic: intent events only)
+#   bg    : #0d0d10  (near-black)
+#   fg    : #D97757  (Claude terracotta)
+#   frame : #D97757  (Claude terracotta — terminal-notifier Claude brand accent)
+# appname is the FILTER key (required — a rule with only action keys is inert).
+# ─────────────────────────────────────────────────────────────────────────
+[claude-intent]
+    appname = "claude-intent"
+    background = "#0d0d10"
+    foreground = "#D97757"
+    frame_color = "#D97757"
+    new_icon = precision-target-reticle-focus
+
+# ─────────────────────────────────────────────────────────────────────────
+# [pi-intent] — pi intent-gate notifications (pi-plugin-intent →
+# Mutations.Warnings → piNotify). Mirrors [claude-intent] shape with a
+# pi-distinct blue frame. No bespoke icon — π prefix is the identity.
+# icon="" defeats any inherited theme icon.
+# ─────────────────────────────────────────────────────────────────────────
+[pi-intent]
+    appname = "pi-intent"
+    background = "#0d0d10"
+    foreground = "#7FB4FF"
+    frame_color = "#7FB4FF"
+
+# ─────────────────────────────────────────────────────────────────────────
+# [pi-intent-eval] — pi tool-block / eval-block notifications.
+# Mirrors the (rule-less) claude-intent-eval surface; pi gives it an
+# explicit rule with a red frame to read as a hard block. icon="" same.
+# ─────────────────────────────────────────────────────────────────────────
+[pi-intent-eval]
+    appname = "pi-intent-eval"
+    background = "#1a1a2e"
+    foreground = "#ff5555"
+    frame_color = "#7FB4FF"
+
+# ─────────────────────────────────────────────────────────────────────────
+# [pi-lazy-plugin] — pi lazy-loader green frame, mirroring
+# [lazy-plugin-green-frame] for claude-lazy-plugin. icon="" same.
+# ─────────────────────────────────────────────────────────────────────────
+[pi-lazy-plugin]
+    appname = "pi-lazy-plugin"
+    frame_color = "#7FB4FF"
+
+# ─────────────────────────────────────────────────────────────────────────
+# [pi-context-request] — pi context-classifier notifications. Mirrors
+# [pi-intent] shape with the same pi-blue frame. icon="" same.
+# ─────────────────────────────────────────────────────────────────────────
+[pi-context-request]
+    appname = "pi-context-request"
+    background = "#0d0d10"
+    foreground = "#7FB4FF"
+    frame_color = "#7FB4FF"
+
+# ─────────────────────────────────────────────────────────────────────────
+# [killer] — process-killer notifications from lister.sh run_killer()
+# (the "television multi-function" launcher that replaced the standalone
+# killer script). Restores the deadpool theming the old [merked] rule used
+# to apply (summary .*Merked.* → deadpool thumbs-up). lister.sh now sets an
+# explicit appname via `notify-send -a killer`, so this rule matches by
+# appname like every other live rule.
+#   icon: deadpool thumbs-up sticker
+# ─────────────────────────────────────────────────────────────────────────
+[killer]
+    appname = "killer"
+    new_icon = "~/Pictures/stickers/deadpool/marvel-deadpool-thumbs-up-sticker.png"
+
+# ─────────────────────────────────────────────────────────────────────────
+# [to-statusbar] — route notifications into the dwmblocks status bar
+# instead of drawing a popup over whatever is on screen.
+#
+# notif-sink records the notification to /tmp/dwmblocks_notif and signals
+# dwmblocks (SIGRTMIN+18); the sb-notif block renders it as a pill at the
+# LEFT edge of the right-aligned status, where it shrinks dwm's elastic
+# window-title region rather than pushing other blocks off the bar.
+#
+# skip_display suppresses the popup. [global] already sets
+# always_run_script = true, which is what keeps the script firing for
+# suppressed notifications. History is deliberately untouched: the full,
+# untruncated text stays available via `dunstctl history`.
+#
+# summary is a POSIX regex here, not a glob — [global] sets
+# enable_posix_regex = true, so the catch-all is ".*" and NOT "*".
+#
+# Rules apply in file order and later rules win, so the popup exemptions
+# below MUST stay after this block.
+#
+# NOTE: this block is duplicated verbatim in the rendered dunstrc. The
+# template only parameterises geometry (@@WIDTH@@, @@OFFSET_X@@, ...), so
+# rules must be kept in sync in both files by hand.
+# ─────────────────────────────────────────────────────────────────────────
+[to-statusbar]
+    summary = ".*"
+    script = /home/n0ko/.local/bin/statusbar/notif-sink
+    skip_display = true
+
+# ── Popup exemptions ─────────────────────────────────────────────────────
+# These still draw on screen AND still land in the bar.
+
+# The safety valve: a pill that self-clears in 8s is too easy to miss for a
+# genuine failure.
+[popup-critical]
+    msg_urgency = critical
+    skip_display = false
+
+[popup-icarus]
+    appname = "icarus"
+    skip_display = false
+
+[popup-killer]
+    appname = "killer"
+    skip_display = false
+
+# Geometry changes must stay visible — and notif-sink keys off this appname
+# to re-read the output width and re-scale the field for eDP-1 vs HDMI-1.
+[popup-display-switch]
+    appname = "display-switch"
+    skip_display = false
