@@ -33,7 +33,9 @@
     # Scaling all geometry/typography by 2x to match physical size on lewis.
     width = (@@WIDTH@@, @@WIDTH@@)
     height = (0, @@HEIGHT@@)
-    origin = bottom-left
+    # top-right, restored from the pre-2026-07-29 config. Not tokenised --
+    # origin does not vary with display scale, so it is a literal here.
+    origin = top-right
     offset = (@@OFFSET_X@@, @@OFFSET_Y@@)                # flush under dwmblocks bar (user_bh=34)
     scale = 1
 
@@ -68,7 +70,10 @@
     # ── Typography ───────────────────────────────────────────────────────
     # Mac uses three VictorMonoNFM faces (Bold-13 title, Regular-12 body,
     # Medium-10 app-name). All sizes doubled for retina-equivalent physical size.
-    font = VictorMono Nerd Font Mono 10
+    # size 12, restored from the pre-2026-07-29 config. NOTE: font is not
+    # tokenised, so it does NOT scale with --scale; on a 2x HiDPI panel the
+    # popup box doubles but the text does not. Tokenise it if that matters.
+    font = VictorMono Nerd Font Mono 12
     line_height = 0
     markup = full
 

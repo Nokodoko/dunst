@@ -31,44 +31,49 @@
     # while mac 16" XDR = ~3456 native px / 344mm ~ retina 2x. Mac SwiftUI 320pt
     # panel renders physically ~73mm wide; lewis 320px panel was only ~36mm wide.
     # Scaling all geometry/typography by 2x to match physical size on lewis.
-    width = (160, 160)
-    height = (0, 120)
-    origin = bottom-left
-    offset = (12, 34)                # flush under dwmblocks bar (user_bh=34)
+    width = (560, 560)
+    height = (0, 600)
+    # top-right, restored from the pre-2026-07-29 config. Not tokenised --
+    # origin does not vary with display scale, so it is a literal here.
+    origin = top-right
+    offset = (24, 34)                # flush under dwmblocks bar (user_bh=34)
     scale = 1
 
     # ── Stacking ─────────────────────────────────────────────────────────
     notification_limit = 1        # only one on-screen at a time; queue depth shown via dwmblocks badge
-    gap_size = 4                 # 2x mac-parity tile gap.
+    gap_size = 12                 # 2x mac-parity tile gap.
 
     # ── Transparency / frame / corner ────────────────────────────────────
     transparency = 0              # fully opaque (was 15; user reverted because dwm side panel was readable behind it)
-    corner_radius = 5            # Mac 10pt @ retina 2x = 20px
-    frame_width = 1               # Mac 1.5pt stroke @ 2x = 3px
+    corner_radius = 20            # Mac 10pt @ retina 2x = 20px
+    frame_width = 3               # Mac 1.5pt stroke @ 2x = 3px
     frame_color = "#00FFFF"
     separator_height = 0
     separator_color = frame
 
     # ── Padding ──────────────────────────────────────────────────────────
     # Mac inner padding 14pt @ 2x = 28px on all four sides.
-    padding = 8
-    horizontal_padding = 8
-    text_icon_padding = 6        # mac HStack 10pt @ 2x
+    padding = 28
+    horizontal_padding = 28
+    text_icon_padding = 20        # mac HStack 10pt @ 2x
 
     # ── Progress bar (Mac overlay has none; keep dunst defaults disabled) ─
     progress_bar = false
 
     # ── Icon sizing ──────────────────────────────────────────────────────
     # Mac 40pt @ 2x = 80px icons.
-    min_icon_size = 20
-    max_icon_size = 20
+    min_icon_size = 80
+    max_icon_size = 80
     icon_position = left
     icon_path = /home/n0ko/.local/share/icons/:/home/n0ko/Pictures/
 
     # ── Typography ───────────────────────────────────────────────────────
     # Mac uses three VictorMonoNFM faces (Bold-13 title, Regular-12 body,
     # Medium-10 app-name). All sizes doubled for retina-equivalent physical size.
-    font = VictorMono Nerd Font Mono 10
+    # size 12, restored from the pre-2026-07-29 config. NOTE: font is not
+    # tokenised, so it does NOT scale with --scale; on a 2x HiDPI panel the
+    # popup box doubles but the text does not. Tokenise it if that matters.
+    font = VictorMono Nerd Font Mono 12
     line_height = 0
     markup = full
 
@@ -239,6 +244,10 @@
 #
 # Rules apply in file order and later rules win, so the popup exemptions
 # below MUST stay after this block.
+#
+# NOTE: this block is duplicated verbatim in the rendered dunstrc. The
+# template only parameterises geometry (560, 24, ...), so
+# rules must be kept in sync in both files by hand.
 # ─────────────────────────────────────────────────────────────────────────
 [to-statusbar]
     summary = ".*"
