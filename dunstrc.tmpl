@@ -254,6 +254,17 @@
     script = /home/n0ko/.local/bin/statusbar/notif-sink
     skip_display = true
 
+# ── Agent board (DP-2 / tag 4) ───────────────────────────────────────────
+# Agent notifications -- A.O's check-ins (fleet-notify sends them from monty
+# as appname n0ko-fleet), rayne/icarus gateway events and anything an icarus
+# hook raises -- are spooled for the board conky draws on the strip
+# (~/.config/conky/agent-board). A later rule's `script` REPLACES an earlier
+# one, so capture.sh chains to notif-sink itself; the bar pill is unchanged.
+# Must stay after [to-statusbar] and before [popup-rayne].
+[agent-board]
+    appname = "n0ko-fleet|[Rr]ayne.*|icarus.*|gateway.*|ao"
+    script = /home/n0ko/.config/conky/agent-board/capture.sh
+
 # ── Popup exemptions: rayne webhooks ONLY ────────────────────────────────
 # Everything else is bar-only. [to-statusbar] above matches every
 # notification including urgency=critical, so nothing else draws over the
